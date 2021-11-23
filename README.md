@@ -5,6 +5,20 @@ Donc première étape : ouvrir l'archive
 Deuxième étape : lire les images. On se balade dans le fichier et on ouvre les images les unes
 après les autres.
 
+
+1. Analyse des formats de base des différents fichiers au format .cbr et/ou .cbz (formats obligatoires: .jpg, .bmp, .png)
+
+Formats sans perte de qualité : BMP, GIF, PNG
+
+Format avec perte de qualité : JPEG
+
+- BMP : lisible pas tous les programmes d'images. Ne dégrade pas la qualité car non compressé => images lourdes
+- GIF : format compressé mais sans perte de qualité, images animées, gère la transparence
+- PNG : pas de perte de qualité et gère la transparence en fonds
+- JPG/JPEG : pas lourd, l’image se dégrade au fur et à mesure de la compression. Ce type d’image ne supporte également guère l’agrandissement au risque d’obtenir une image qui n’est pas nette, où vous pouvez même distinguer les pixels.
+
+2. Algorithmes de redimensionnement d'images 
+
 On va devoir utiliser l'interface graphique pour ouvrir les images après les avoir redimensionnées.
 
 Il existe plusieurs algo pour redimensionner une image. Globalement pour l'agrandir il suffit
@@ -12,3 +26,5 @@ de déteriminer la couleur des nouveaux pixels (en prenant la même que celle d'
 Pour réduire l'image par n, il suffit de prendre la moyenne des pixels de n en n.
 
 https://clouard.users.greyc.fr/Pantheon/experiments/rescaling/index-fr.html#nearest
+
+-> Si il faut redimensionner avec des proportions de dimensions différentes de l'image de base, algo de seam carving (redimensionne selon les zones d'importance avec la programmation dynamique) => seulement si on a le temps http://igm.univ-mlv.fr/~dr/XPOSE2012/La%20programmation%20dynamique/seamcarving.html
