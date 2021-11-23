@@ -3,7 +3,7 @@
 Un fichier .cbr sont des archies.rar contenant des images sous formes GIF, JPEG, PNG, BMP
 Donc première étape : ouvrir l'archive
 Deuxième étape : lire les images. On se balade dans le fichier et on ouvre les images les unes
-après les autres.
+après les autres. (pour le traitement d'image, librairie Magick++/ImageMagick)
 
 Librairie de gestion de .zip et .rar directement sur la bibliothèque graphique wxWidgets.
 
