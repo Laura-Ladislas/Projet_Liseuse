@@ -29,3 +29,9 @@ Pour réduire l'image par n, il suffit de prendre la moyenne des pixels de n en 
 https://clouard.users.greyc.fr/Pantheon/experiments/rescaling/index-fr.html#nearest
 
 -> Si il faut redimensionner avec des proportions de dimensions différentes de l'image de base, algo de seam carving (redimensionne selon les zones d'importance avec la programmation dynamique) => seulement si on a le temps http://igm.univ-mlv.fr/~dr/XPOSE2012/La%20programmation%20dynamique/seamcarving.html
+
+
+3. Interfaces
+
+-> relier CMake et wxWidgets : https://docs.wxwidgets.org/trunk/overview_cmake.html
+-> pour désarchiver sans wxWidgets : libarchive (chez Laura ça marchait pas)
