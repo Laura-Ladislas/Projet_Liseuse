@@ -5,6 +5,7 @@ Donc première étape : ouvrir l'archive
 Deuxième étape : lire les images. On se balade dans le fichier et on ouvre les images les unes
 après les autres.
 
+Librairie de gestion de .zip et .rar directement sur la bibliothèque graphique wxWidgets.
 
 1. Analyse des formats de base des différents fichiers au format .cbr et/ou .cbz (formats obligatoires: .jpg, .bmp, .png)
 
