@@ -31,6 +31,8 @@ https://clouard.users.greyc.fr/Pantheon/experiments/rescaling/index-fr.html#near
 -> Si il faut redimensionner avec des proportions de dimensions différentes de l'image de base, algo de seam carving (redimensionne selon les zones d'importance avec la programmation dynamique) => seulement si on a le temps http://igm.univ-mlv.fr/~dr/XPOSE2012/La%20programmation%20dynamique/seamcarving.html
 
 
+-> En fait sur le site du prof y a un truc : https://perso.ensta-paris.fr/~bmonsuez/Cours/doku.php?id=in204:cpp#redimensionnement_d_une_image
+
 3. Interfaces
 
 -> relier CMake et wxWidgets : https://docs.wxwidgets.org/trunk/overview_cmake.html
