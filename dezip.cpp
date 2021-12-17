@@ -16,6 +16,7 @@ int main()
 	{
 	    // access meta-data
 	    wxString name = entry->GetName();
+	    //Les images vont dans ce dossier qu'on aura créer au préalable
 	    wxString strTargetDir = "../image";
 	    wxString strFileName = strTargetDir + wxFileName::GetPathSeparator() + name;
 
