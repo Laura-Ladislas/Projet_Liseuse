@@ -5,3 +5,9 @@ Désarchivage : wxZipInputStream / wxFFileInputStream      #include <wx/wfstream
 
 
 Barre d'outils : wxToolBar
+
+
+Fenêtre : wxBoxSizer    #include <wx/sizer.h>
+- forme de l'écran (option WXVERTICAL)
+
+
