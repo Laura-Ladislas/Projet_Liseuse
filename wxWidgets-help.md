@@ -17,6 +17,9 @@ Fenêtre : wxBoxSizer    #include <wx/sizer.h>
 -----------------------------------
 
 Evenements : wxBEGIN_EVENT_TABLE / EVT_MENU / wxEND_EVENT_TABLE / wxIMPLEMENT_APP   #include <wx/menu/h>
-- dans le main, ce qui s'exécute 
+- dans le main 
+- les EVT_MENU créent les différents éléments qui pourront être cliqués sur l'interface
 
+-----------------------------------
 
+Chaînes de caractères : wxString    #include <wx/string.h>
