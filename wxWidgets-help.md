@@ -22,4 +22,6 @@ Evenements : wxBEGIN_EVENT_TABLE / EVT_MENU / wxEND_EVENT_TABLE / wxIMPLEMENT_AP
 
 -----------------------------------
 
-Chaînes de caractères : wxString    #include <wx/string.h>
+Chaînes de caractères et fichiers : wxString / wxFileName    #include <wx/string.h>   #include <wx/filename.h>
+- représentent des concepts (checkent que ça existe etc)
+- pour déplacer les fichiers c'est pas ces classes là 
