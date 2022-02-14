@@ -37,3 +37,19 @@ https://clouard.users.greyc.fr/Pantheon/experiments/rescaling/index-fr.html#near
 
 -> relier CMake et wxWidgets : https://docs.wxwidgets.org/trunk/overview_cmake.html
 -> pour désarchiver sans wxWidgets : libarchive (chez Laura ça marchait pas)
+
+## POUR COMPILER
+
+cd build
+cmake ..
+make
+./Dezip
+
+## Travail effectué
+
+Création des fichiers win (fenêtre d'affichage) et appli (fonction principale pour l'affichage).
+Chargé et affiché les images du dossier image selon la valeur d'un indice i. Pour l'instant tout 
+est dans le win.cpp il faudrait créer une fonction.
+
+Prochain objectif : relier le tout à la fonction dezip, creer les boutons pour tourner les pages et
+faire en sorte que ça modifie i et l'affichage.
