@@ -8,12 +8,7 @@ class Appli: public wxApp
 {
 public:
      bool OnInit();
-
-/*private:
-     Win * window;       // Un pointeur vers notre fenêtre
-     */
+     
 };
-
-DECLARE_APP(Appli)
 
 #endif
