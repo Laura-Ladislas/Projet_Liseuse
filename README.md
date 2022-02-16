@@ -48,11 +48,12 @@ make
 ## Travail effectué
 
 Création des fichiers win (fenêtre d'affichage) et appli (fonction principale pour l'affichage).
-Chargé et affiché les images du dossier image selon la valeur d'un indice i. Pour l'instant tout 
-est dans le win.cpp il faudrait créer une fonction.
+Chargé et affiché les images du dossier image selon la valeur d'un indice i.
 
-Prochain objectif : relier le tout à la fonction dezip, creer les boutons pour tourner les pages et
-faire en sorte que ça modifie i et l'affichage.
+16/02: 
 
-Création d'un menu avec un bouton lire qui ouvre l'image, à chaque fois qu'on clique dessus ça passe à la
-page suivante. Image toute petite dans un coin je ne sais pas encore d'où ça vient.
+Liseuse fonctionelle pour un exemple précis, il reste à la généraliser et à gérer les cas d'erreurs.
+Amélioration possible : fonction zoom et algorithme de redimensionnement. Charger les images une fois
+et les stocker pour l'instant à chaque fois qu'on les affiche on les recharge.
+Problèmes : quand on passe à l'image suivante les images se chargent par dessus l'ancienne, quand
+l'image est plus petite que la précédente on voit encore l'image en dessous.

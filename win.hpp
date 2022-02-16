@@ -4,22 +4,25 @@
 #include<wx/wx.h>
 #include <wx/menu.h>
 
-/*class ScrWindow: public wxFrame
-{
-public:
-    ScrWindow(const wxString& title);
-};*/
 
-class SimpleMenu : public wxFrame
+class Win : public wxFrame
 {
 public:
-    SimpleMenu(const wxString& title);
+    Win(const wxString& title);
 
     void OnLire(wxCommandEvent& event);
+    void OnDezip(wxCommandEvent& event);
+    void OnPrev(wxCommandEvent& event);
+    void OnNext(wxCommandEvent& event);
 
     wxMenuBar *menubar;
     wxMenu *file;
 
 };
 
+enum
+    {
+    ID_Lire = 1,
+    ID_Dezip=100
+    };
 #endif
