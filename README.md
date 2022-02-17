@@ -52,8 +52,15 @@ Chargé et affiché les images du dossier image selon la valeur d'un indice i.
 
 16/02: 
 
-Liseuse fonctionelle pour un exemple précis, il reste à la généraliser et à gérer les cas d'erreurs.
+Liseuse fonctionnelle pour un exemple précis, il reste à la généraliser et à gérer les cas d'erreurs.
 Amélioration possible : fonction zoom et algorithme de redimensionnement. Charger les images une fois
 et les stocker pour l'instant à chaque fois qu'on les affiche on les recharge.
 Problèmes : quand on passe à l'image suivante les images se chargent par dessus l'ancienne, quand
 l'image est plus petite que la précédente on voit encore l'image en dessous.
+
+17/02:
+
+Liseuse fonctionnelle dans le cas général, gestion de quelque cas d'erreur.
+Ajout de la fonction Zoom : on peut ajouter deZoom facilement, fonction à retravailler parce que les
+images sont floues.
+Problèmes de chargement et d'image les unes sur les autres non résolus.

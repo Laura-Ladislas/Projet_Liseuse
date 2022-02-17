@@ -9,18 +9,14 @@
 #include <iostream>
 #include <wx/artprov.h>
 
-
 std::vector<wxString> m_imageNoms;
 size_t i = 0;
 size_t n = 0;
-wxDir dir("../image");
-wxString filename;
 wxScrolledWindow *sw;
+wxStaticBitmap *sb;
 
-Win::Win(const wxString& title)
-       : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(500, 500))
+Win::Win(const wxString& title): wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(500, 500))
 {
-
   menubar = new wxMenuBar;
   file = new wxMenu;
   file->Append(ID_Lire, wxT("&Lire"));
@@ -28,102 +24,113 @@ Win::Win(const wxString& title)
   menubar->Append(file, wxT("&Menu"));
   SetMenuBar(menubar);
 
-  Connect(ID_Lire, wxEVT_COMMAND_MENU_SELECTED,
-      wxCommandEventHandler(Win::OnLire));
-  Connect(ID_Dezip, wxEVT_COMMAND_MENU_SELECTED,
-      wxCommandEventHandler(Win::OnDezip));
+  Connect(ID_Lire, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Win::OnLire));
+  Connect(ID_Dezip, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(Win::OnDezip));
   Centre();
 
-  wxToolBar *toolbar =
-        new wxToolBar(this, -1, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL | wxTB_BOTTOM);
+  wxToolBar *toolbar = new wxToolBar(this, -1, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL | wxTB_BOTTOM);
+  toolbar->AddStretchableSpace();
 
+  wxBitmap imageZoom = wxArtProvider::GetBitmap(wxART_PLUS);
+  wxToolBarToolBase *imageZoomTool = toolbar->AddTool(-1, wxT("Image zoom"), imageZoom);
+  Connect(imageZoomTool->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler(Win::OnZoom));
 
-    toolbar->AddStretchableSpace();
+  wxBitmap imagePrec = wxArtProvider::GetBitmap(wxART_GO_BACK);
+  wxToolBarToolBase *imagePrecTool = toolbar->AddTool(-1, wxT("Image precedente"), imagePrec);
+  Connect(imagePrecTool->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler(Win::OnPrec));
 
-    // Icone image precedente
-    wxBitmap prevImageBitmap = wxArtProvider::GetBitmap(wxART_GO_BACK);
-    wxToolBarToolBase *prevImage = toolbar->AddTool(-1, wxT("Image precedente"), prevImageBitmap);
-    Connect(prevImage->GetId(), wxEVT_COMMAND_TOOL_CLICKED,
-wxCommandEventHandler(Win::OnPrev));
+  wxBitmap imageSuiv = wxArtProvider::GetBitmap(wxART_GO_FORWARD);
+  wxToolBarToolBase *imageSuivTool = toolbar->AddTool(-1, wxT("Image suivante"), imageSuiv);
+  Connect(imageSuivTool->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler(Win::OnSuiv));
 
-    // Icone image suivante
-    wxBitmap nextImageBitmap = wxArtProvider::GetBitmap(wxART_GO_FORWARD);
-    wxToolBarToolBase *nextImage = toolbar->AddTool(-1, wxT("Image suivante"), nextImageBitmap);
-    Connect(nextImage->GetId(), wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler(Win::OnNext));
+  toolbar->Realize();
+  this->SetToolBar(toolbar);
 
-    toolbar->Realize();
-    this->SetToolBar(toolbar);
-
-    sw = new wxScrolledWindow(this);
+  sw = new wxScrolledWindow(this);
 }
 
 void Win::OnLire(wxCommandEvent& WXUNUSED(event))
 {
-  wxImage::AddHandler(new wxJPEGHandler);
+  wxInitAllImageHandlers();
 
-  const wxString &currentDir = wxGetCwd();
+  wxFileDialog dialog(sw, wxT("Lire"),"", "", "Fichiers (*.jpg;*.jpeg;*.png;*.bmp;*.gif)|*.jpg;*.jpeg;*.png;*.bmp;*.gif", wxFD_OPEN |wxFD_FILE_MUST_EXIST);
+  if(dialog.ShowModal() == wxID_CANCEL)
+  {
+    return;
+  }
+  wxString filePath = dialog.GetDirectory();
+
+  wxDir dir(filePath);
+  const wxString &currentDir = dir.GetName();
+  wxString filename;
   bool cont = dir.GetFirst(&filename, wxEmptyString, wxDIR_FILES);
   while (cont)
   {
     wxFileName fname(currentDir, filename);
-    const wxString &ending = fname.GetExt();
-    m_imageNoms.push_back(dir.GetNameWithSep() + filename);
+    const wxString &ext = fname.GetExt();
+    if (ext == wxT("png") || ext == wxT("jpg") || ext == wxT("jpeg") || ext == wxT("bmp") || ext == wxT("gif"))
+    {
+      m_imageNoms.push_back(dir.GetNameWithSep() + filename);
+      n++;
+    }
     cont = dir.GetNext(&filename);
-    n++;
   }
   wxString &imageName = m_imageNoms.at(i);
 
   std::shared_ptr<wxImage> image = std::make_shared<wxImage>();
-  bool loadOk = image->LoadFile(imageName, wxBITMAP_TYPE_ANY);
+  bool test = image->LoadFile(imageName, wxBITMAP_TYPE_ANY);
 
-  wxBitmap bmp(*image, wxBITMAP_TYPE_JPEG);
-  wxStaticBitmap *sb = new wxStaticBitmap(sw, -1, bmp);
+  if (image->IsOk() && test)
+  {
+    int widthI = image->GetWidth();
+    int heightI = image->GetHeight();
+    image->Rescale(widthI*400/heightI, 400);
 
-  int width = bmp.GetWidth();
-  int height = bmp.GetHeight();
+    wxBitmap bmp(*image, wxBITMAP_TYPE_JPEG);
+    sb = new wxStaticBitmap(sw, -1, bmp);
 
-  sw->SetScrollbars(10, 10, width/10, height/10);
-  sw->Scroll(50,10);
+    int widthB = bmp.GetWidth();
+    int heightB = bmp.GetHeight();
 
-  Center();
+    sw->SetScrollbars(10, 10, widthB/10, heightB/10);
+  }
+  
 }
 
 void Win::OnDezip(wxCommandEvent& WXUNUSED(event))
 {
+  wxFileDialog dialog(sw, wxT("Ouvrir une archive"),"", "", "Archives (*.zip;*.cbz)|*.zip;*.cbz;", wxFD_OPEN |wxFD_FILE_MUST_EXIST);
+  if(dialog.ShowModal() == wxID_CANCEL)
+  {
+    return;
+  }
+
   std::unique_ptr<wxZipEntry> entry;
-  wxFFileInputStream in(wxT("test.cbz"));
+  wxFFileInputStream in(dialog.GetPath());
   wxZipInputStream zip(in);
 
-  //Parcourt tous les élements de l'archive et les extrait tend qu'elle est pas vide
   while (entry.reset(zip.GetNextEntry()), entry.get() != NULL)
   {
-      // access meta-data
       wxString name = entry->GetName();
-      //Les images vont dans ce dossier qu'on aura créer au préalable
       wxString strTargetDir = "../image";
       wxString strFileName = strTargetDir + wxFileName::GetPathSeparator() + name;
-
-      // Ne sert pas à dezipper, sert à gérer si c'est un fichier ou un dossier
-      /*wxFileName new_file;
-      // read 'zip' to access the entry's data
-      if (entry->IsDir())
-      {
-        //Ajouter des affichages pour comprendre ce qu'il se passe et si le strFileName est bien créer
-        new_file.AssignDir(strFileName);
-      }
-      else
-      {
-          new_file.Assign(strFileName);
-      }*/
-
-      //strFileName doit contenir le path du dossier dans lequel on veut read (donc extraire) nos fichiers
       wxFileOutputStream file(strFileName);
       zip.Read(file);
   }
+  wxMessageDialog message(sw, "", "Info", wxOK );
+  message.SetMessage(wxT("Dezip terminé, les fichiers sont dans le dossier image !"));
+  message.ShowModal();
 }
 
-void Win::OnPrev(wxCommandEvent& WXUNUSED(event))
+void Win::OnPrec(wxCommandEvent& WXUNUSED(event))
 {
+  if (m_imageNoms.empty())
+  {
+    wxMessageDialog message(sw, "", "Info", wxOK );
+    message.SetMessage(wxT("Cliquez sur Lire pour choisir une BD"));
+    message.ShowModal();
+    return;
+  }
   if (i>0)
   {
     i--;
@@ -135,22 +142,33 @@ void Win::OnPrev(wxCommandEvent& WXUNUSED(event))
   wxString &imageName = m_imageNoms.at(i);
 
   std::shared_ptr<wxImage> image = std::make_shared<wxImage>();
-  bool loadOk = image->LoadFile(imageName, wxBITMAP_TYPE_ANY);
+  bool test = image->LoadFile(imageName, wxBITMAP_TYPE_ANY);
 
-  wxBitmap bmp(*image, wxBITMAP_TYPE_JPEG);
-  wxStaticBitmap *sb = new wxStaticBitmap(sw, -1, bmp);
+  if (image->IsOk() && test)
+  {
+    int widthI = image->GetWidth();
+    int heightI = image->GetHeight();
+    image->Rescale(widthI*400/heightI, 400);
 
-  int width = bmp.GetWidth();
-  int height = bmp.GetHeight();
+    wxBitmap bmp(*image, wxBITMAP_TYPE_JPEG);
+    sb = new wxStaticBitmap(sw, -1, bmp);
 
-  sw->SetScrollbars(10, 10, width/10, height/10);
-  sw->Scroll(50,10);
+    int widthB = bmp.GetWidth();
+    int heightB = bmp.GetHeight();
 
-  Center();
+    sw->SetScrollbars(10, 10, widthB/10, heightB/10);
+  }
 }
 
-void Win::OnNext(wxCommandEvent& WXUNUSED(event))
+void Win::OnSuiv(wxCommandEvent& WXUNUSED(event))
 {
+  if (m_imageNoms.empty())
+  {
+    wxMessageDialog message(sw, "", "Info", wxOK );
+    message.SetMessage(wxT("Cliquez sur Lire pour choisir une BD"));
+    message.ShowModal();
+    return;
+  }
   if (i<n-1)
   {
     i++;
@@ -162,16 +180,47 @@ void Win::OnNext(wxCommandEvent& WXUNUSED(event))
   wxString &imageName = m_imageNoms.at(i);
 
   std::shared_ptr<wxImage> image = std::make_shared<wxImage>();
-  bool loadOk = image->LoadFile(imageName, wxBITMAP_TYPE_ANY);
+  bool test = image->LoadFile(imageName, wxBITMAP_TYPE_ANY);
 
-  wxBitmap bmp(*image, wxBITMAP_TYPE_JPEG);
-  wxStaticBitmap *sb = new wxStaticBitmap(sw, -1, bmp);
+  if (image->IsOk() && test)
+  {
+    int widthI = image->GetWidth();
+    int heightI = image->GetHeight();
+    image->Rescale(widthI*400/heightI, 400);
 
-  int width = bmp.GetWidth();
-  int height = bmp.GetHeight();
+    wxBitmap bmp(*image, wxBITMAP_TYPE_JPEG);
+    sb = new wxStaticBitmap(sw, -1, bmp);
 
-  sw->SetScrollbars(10, 10, width/10, height/10);
-  sw->Scroll(50,10);
+    int widthB = bmp.GetWidth();
+    int heightB = bmp.GetHeight();
 
-  Center();
+    sw->SetScrollbars(10, 10, widthB/10, heightB/10);
+  }
+}
+
+void Win::OnZoom(wxCommandEvent& WXUNUSED(event))
+{
+  if (m_imageNoms.empty())
+  {
+    wxMessageDialog message(sw, "", "Info", wxOK );
+    message.SetMessage(wxT("Cliquez sur Lire pour choisir une BD"));
+    message.ShowModal();
+    return;
+  }
+
+  wxBitmap bmp = sb->GetBitmap();
+  wxImage image = bmp.ConvertToImage();
+
+  int widthI = image.GetWidth();
+  int heightI = image.GetHeight();
+  std::cout<<heightI<<std::endl;
+  image.Rescale(widthI*2, heightI*2);
+
+  wxBitmap bmp2(image, wxBITMAP_TYPE_JPEG);
+  sb = new wxStaticBitmap(sw, -1, bmp2);
+
+  int widthB = bmp2.GetWidth();
+  int heightB = bmp2.GetHeight();
+
+  sw->SetScrollbars(10, 10, widthB/10, heightB/10);
 }

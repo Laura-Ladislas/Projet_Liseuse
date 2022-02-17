@@ -12,8 +12,9 @@ public:
 
     void OnLire(wxCommandEvent& event);
     void OnDezip(wxCommandEvent& event);
-    void OnPrev(wxCommandEvent& event);
-    void OnNext(wxCommandEvent& event);
+    void OnPrec(wxCommandEvent& event);
+    void OnSuiv(wxCommandEvent& event);
+    void OnZoom(wxCommandEvent& event);
 
     wxMenuBar *menubar;
     wxMenu *file;
