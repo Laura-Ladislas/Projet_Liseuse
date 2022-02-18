@@ -4,7 +4,7 @@
 #include<wx/wx.h>
 #include <wx/menu.h>
 
-
+//Classe représentant la fenêtre d'affichage
 class Win : public wxFrame
 {
 public:
@@ -15,15 +15,12 @@ public:
     void OnPrec(wxCommandEvent& event);
     void OnSuiv(wxCommandEvent& event);
     void OnZoom(wxCommandEvent& event);
+    void OnDezoom(wxCommandEvent& event);
 
     wxMenuBar *menubar;
-    wxMenu *file;
+    wxMenu *menu;
+    wxScrolledWindow *sw;                //Fenêtre où s'affiche l'image
+    wxStaticBitmap *sb;                  //Bitmap statique dans lequel sont chargées les images
 
 };
-
-enum
-    {
-    ID_Lire = 1,
-    ID_Dezip=100
-    };
 #endif

@@ -1,0 +1,3 @@
+/mnt/c/wx_Proj/Liseuse/Projet_Liseuse/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/wx_Proj/Liseuse/Projet_Liseuse/build/CMakeFiles/edit_cache.dir
+/mnt/c/wx_Proj/Liseuse/Projet_Liseuse/build/CMakeFiles/App.dir

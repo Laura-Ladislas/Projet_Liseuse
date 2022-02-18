@@ -3,11 +3,12 @@
 
 IMPLEMENT_APP(Appli);
 
+//Affiche la fenêtre complète
 bool Appli::OnInit()
 {
 
-  Win *menu = new Win(wxT("Liseuse"));
-    menu->Show(true);
+  Win *win = new Win(wxT("Liseuse"));
+    win->Show(true);
 
   return true;
 }
