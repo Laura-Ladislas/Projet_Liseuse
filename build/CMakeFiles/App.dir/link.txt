@@ -1,1 +1,0 @@
-/usr/bin/c++   -pthread   CMakeFiles/App.dir/appli.cpp.o  -o App  -L/usr/lib/x86_64-linux-gnu -pthread -lwx_gtk3u_gl-3.0 -lwx_gtk3u_core-3.0 -lwx_baseu-3.0 
