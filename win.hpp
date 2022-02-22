@@ -18,7 +18,7 @@ public:
     void OnDezoom(wxCommandEvent& event);
 
     wxMenuBar *menubar;
-    wxMenu *menu;
+    wxMenu *menu;                         
     wxScrolledWindow *sw;                //Fenêtre où s'affiche l'image
     wxStaticBitmap *sb;                  //Bitmap statique dans lequel sont chargées les images
 

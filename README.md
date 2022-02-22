@@ -1,4 +1,6 @@
-# Projet_Liseuse
+# Projet Liseuse
+
+## Analyse
 
 Un fichier .cbr sont des archies.rar contenant des images sous formes GIF, JPEG, PNG, BMP
 Donc première étape : ouvrir l'archive
@@ -38,29 +40,35 @@ https://clouard.users.greyc.fr/Pantheon/experiments/rescaling/index-fr.html#near
 -> relier CMake et wxWidgets : https://docs.wxwidgets.org/trunk/overview_cmake.html
 -> pour désarchiver sans wxWidgets : libarchive (chez Laura ça marchait pas)
 
-## POUR COMPILER
+## Pour compiler
 
 cd build
+
 cmake ..
+
 make
+
 ./Dezip
 
-## Travail effectué
 
-Création des fichiers win (fenêtre d'affichage) et appli (fonction principale pour l'affichage).
-Chargé et affiché les images du dossier image selon la valeur d'un indice i.
+## Description détaillée
 
-16/02: 
+La liseuse est constitué de 4 fichiers : les fichiers appli.cpp et appli.hpp gère l'ouverture et l'affichage
+de la fenêtre.
 
-Liseuse fonctionnelle pour un exemple précis, il reste à la généraliser et à gérer les cas d'erreurs.
-Amélioration possible : fonction zoom et algorithme de redimensionnement. Charger les images une fois
-et les stocker pour l'instant à chaque fois qu'on les affiche on les recharge.
-Problèmes : quand on passe à l'image suivante les images se chargent par dessus l'ancienne, quand
-l'image est plus petite que la précédente on voit encore l'image en dessous.
+Les fichiers win.cpp et win.hpp gère les différents boutons et menus qui s'affichent sur la fenêtre ainsi que
+la gestion des images.
 
-17/02:
+Une fois la fenêtre ouverte, on trouve dans le menu déroulant un bouton "Dezip" qui permet de choisir
+un fichier au format .cbz ou .zip dans l'appareil et en extrait le contenu dans un dossier image crée
+au préalable.
 
-Liseuse fonctionnelle dans le cas général, gestion de quelque cas d'erreur.
-Ajout de la fonction Zoom : on peut ajouter deZoom facilement, fonction à retravailler parce que les
-images sont floues.
-Problèmes de chargement et d'image les unes sur les autres non résolus.
+On trouve également le bouton "Lire" qui permet de choisir une image au format jpeg, png, bmp, gif et qui affiche
+la première image du dossier dans lequel elle est et charge en mémoire les images suivantes. 
+Ainsi pour lire une BD, il suffit de "Dezip" le fichier téléchargé puis de "Lire" les images contenues.
+
+Enfin, les boutons présents en bas de la fenêtre d'affichage permettent de passer à la page précédente et à la page suivante 
+mais aussi de zoomer et dezoomer sur l'image selon un facteur 2.
+
+Pour tester l'appli nous utilisons le fichier test.cbz présent dans le dossier build, il contient une
+cinquantaine de page de BD que nous pouvons lire facilement.
