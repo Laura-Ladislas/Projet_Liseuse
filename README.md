@@ -53,14 +53,14 @@ make
 
 ## Description détaillée
 
-La liseuse est constitué de 4 fichiers : les fichiers appli.cpp et appli.hpp gère l'ouverture et l'affichage
+La liseuse est constituée de 4 fichiers : les fichiers appli.cpp et appli.hpp gèrent l'ouverture et l'affichage
 de la fenêtre.
 
 Les fichiers win.cpp et win.hpp gère les différents boutons et menus qui s'affichent sur la fenêtre ainsi que
 la gestion des images.
 
 Une fois la fenêtre ouverte, on trouve dans le menu déroulant un bouton "Dezip" qui permet de choisir
-un fichier au format .cbz ou .zip dans l'appareil et en extrait le contenu dans un dossier image crée
+un fichier au format .cbz ou .zip dans l'appareil et en extrait le contenu dans un dossier "image" crée
 au préalable.
 
 On trouve également le bouton "Lire" qui permet de choisir une image au format jpeg, png, bmp, gif et qui affiche
@@ -70,5 +70,5 @@ Ainsi pour lire une BD, il suffit de "Dezip" le fichier téléchargé puis de "L
 Enfin, les boutons présents en bas de la fenêtre d'affichage permettent de passer à la page précédente et à la page suivante 
 mais aussi de zoomer et dezoomer sur l'image selon un facteur 2.
 
-Pour tester l'appli nous utilisons le fichier test.cbz présent dans le dossier build, il contient une
+Pour tester l'appli nous utilisons le fichier "test.cbz" présent dans le dossier "build", il contient une
 cinquantaine de page de BD que nous pouvons lire facilement.
