@@ -75,6 +75,8 @@ void Win::OnLire(wxCommandEvent& WXUNUSED(event))
   wxString filename;
   bool still = dir.GetFirst(&filename, wxEmptyString, wxDIR_FILES);
 
+  vectImages.clear();
+
   //On charge le nom des images dans le vecteur pour les avoir toutes disponibles
   while (still)
   {
