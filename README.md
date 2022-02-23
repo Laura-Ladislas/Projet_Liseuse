@@ -48,7 +48,7 @@ cmake ..
 
 make
 
-./Dezip
+./App
 
 
 ## Description détaillée
